@@ -1,64 +1,35 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-int palindrome(string &s, int i, int j) {
-    int l = i;
-    int h = j;
-
-    while(l < h) {
-        if(s[l] != s[h]) return 0;
-
-        l ++;
-        h --;
+int minPalindromePartition(string s) {
+    int n = s.length();
+    vector<vector<bool>> P(n, vector<bool>(n));
+    vector<int> count(n, INT_MAX);
+    for(int i = 0; i < n; i++) {
+        P[i][i] = true;
     }
 
-    return 1;
-}
+    for(int L = 2; L <= n; L++) {
+        for(int i = 0; i < n - L + 1; i++) {
+            int j = i + L - 1;
 
-string convert(int a, int b) {
-    return to_string(a) + "" + to_string(b);
-}
+            if(L == 2) P[i][j] = (s[i] == s[j]);
 
-int minPalindromePartition(string &s, int i, int j, unordered_map<string, int> &memo) {
-
-    if(i > j) return 0;
-    string ij = convert(i, j);
-
-    if(memo.find(ij) != memo.end()) return memo[ij];
-
-    if(i == j){
-     memo[ij] = 0;
-     return 0;
-    }
-
-    if(palindrome(s, i, j)){
-        memo[ij] = 0;
-        return 0;
-    }
-
-    int mini = INT_MAX;
-
-    for(int k = i; k < j; k++) {
-        int left = INT_MAX;
-        int right = INT_MAX;
-
-        if(memo.find(convert(i, k)) != memo.end()) left = memo[convert(i, k)];
-
-        if(memo.find(convert(k + 1, j)) != memo.end()) right = memo[convert(k + 1, j)];
-
-        if(left == INT_MAX) {
-            left = minPalindromePartition(s, i, k, memo);
+            else
+                P[i][j] = (s[i] == s[j]) && P[i+1][j-1];
         }
-
-        if(right == INT_MAX) {
-            right = minPalindromePartition(s, k + 1, j, memo);
-        }
-
-        mini = min(mini, left + right + 1);
     }
 
-    memo[ij] = mini;
-    return memo[ij];
+    for(int i = 0; i < n; i++) {
+        if(P[0][i]) count[i] = 0;
+
+        else
+            for(int j = 0; j < i; j++) {
+                if(P[j+1][i] && count[j] + 1 < count[i])
+                    count[i] = count[j] + 1;
+            }
+    }
+    return count[n-1];
 }
 
 int main() {
@@ -71,8 +42,7 @@ int main() {
 	    string s;
 	    cin>>s;
 
-	    unordered_map<string, int> memo;
-	    cout << minPalindromePartition(s, 0, s.length() - 1, memo)<< endl;
+	    cout << minPalindromePartition(s)<< endl;
 	}
 	return 0;
 }
