@@ -40,8 +40,8 @@ int part(vector<int> &arr, int l, int r) {
 
 int main() {
 	//code
-  ios_base::sync_with_stdio(false);
-  cin.tie(NULL);
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
 	int T;
 	cin >> T;
 	while(T--) {
