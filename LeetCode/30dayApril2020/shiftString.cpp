@@ -21,11 +21,11 @@ class Solution {
     
     string rightShift (string s, int n) {
         string s1 = "", s2 = "";
-        
-        for(int i = s.length() - n; i < s.length(); i++) {
+        int len = s.length();
+        for(int i = len - n; i < len; i++) {
             s1 += s[i];
         }
-        for(int i = 0; i < s.length() - n; i++) {
+        for(int i = 0; i < len - n; i++) {
             s2 += s[i];
         }
         
