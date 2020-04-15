@@ -6,20 +6,9 @@ using namespace std;
 
 class Solution {
     
-    string leftShift (string s, int n) {
-        string s1 = "", s2 = "";
-        
-        for(int i = 0; i < n; i++) {
-            s1 += s[i];
-        }
-        for(int i = n; i < s.length(); i++) {
-            s2 += s[i];
-        }
-        
-        return s2 + s1;
-    }
-    
-    string rightShift (string s, int n) {
+    /// If want to do without using substr function
+    /*
+    string doShift (string s, int n) {
         string s1 = "", s2 = "";
         int len = s.length();
         for(int i = len - n; i < len; i++) {
@@ -31,6 +20,7 @@ class Solution {
         
         return s1 + s2;
     }
+     */
     
 public:
     string stringShift(string s, vector<vector<int>>& shift) {
@@ -45,8 +35,11 @@ public:
         
         finalShift = finalShift % len;
         
-        if(finalShift < 0) return leftShift(s, -1 * finalShift);
+        int n = s.length();
+        if(finalShift < 0) finalShift += n;
         
-        else return rightShift(s, finalShift);
+        //return doShift(s, finalShift);
+        
+        return s.substring(n - finalShift) + s.substring(0, n - finalShift);
     }
 };
