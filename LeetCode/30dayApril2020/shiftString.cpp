@@ -45,8 +45,6 @@ public:
         
         finalShift = finalShift % len;
         
-        if(finalShift == 0) return s;
-        
         if(finalShift < 0) return leftShift(s, -1 * finalShift);
         
         else return rightShift(s, finalShift);
