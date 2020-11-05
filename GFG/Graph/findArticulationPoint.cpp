@@ -24,10 +24,7 @@ void dfs(int root, int at, int parent, int id, int &noOfOut, vector<bool> &visit
         if(!visited[to]) {
             dfs(root, to, at, id, noOfOut, visited, edges);
             low[at] = min(low[at], low[to]);
-            if(ids[at] < low[to])
-                articulationPoints[at] = true;
-            
-            if(ids[at] == low[to])
+            if(ids[at] <= low[to])
                 articulationPoints[at] = true;
         }
         else {
